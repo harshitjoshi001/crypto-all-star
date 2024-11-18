@@ -17,8 +17,12 @@ export function getConfig() {
     }),
     ssr: true,
     transports: {
-      [mainnet.id]: http('https://eth-mainnet.g.alchemy.com/v2/RrHqwHBQgmEyVTjR-rDBp4rTwNSfeMgi'),
-      [sepolia.id]: http('https://eth-sepolia.g.alchemy.com/v2/RrHqwHBQgmEyVTjR-rDBp4rTwNSfeMgi'),
+      [mainnet.id]: http(
+        'https://eth-mainnet.g.alchemy.com/v2/RrHqwHBQgmEyVTjR-rDBp4rTwNSfeMgi'
+      ),
+      [sepolia.id]: http(
+        'https://eth-sepolia.g.alchemy.com/v2/RrHqwHBQgmEyVTjR-rDBp4rTwNSfeMgi'
+      ),
     },
   });
 }
