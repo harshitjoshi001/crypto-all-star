@@ -4,9 +4,9 @@ import { Inter } from 'next/font/google';
 import { headers } from 'next/headers';
 import { type ReactNode } from 'react';
 import { cookieToInitialState } from 'wagmi';
-
 import { getConfig } from '../wagmi';
 import { Providers } from './providers';
+import Header from '@/components/core/header';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,7 +23,9 @@ export default function RootLayout(props: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers initialState={initialState}>{props.children}</Providers>
+        <Providers initialState={initialState}>
+          <Header/>
+          {props.children}</Providers>
       </body>
     </html>
   );

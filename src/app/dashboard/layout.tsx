@@ -9,8 +9,8 @@ interface MyComponentProps {
 const RootLayout: React.FC<MyComponentProps> = ({ children }) => {
   return (
     <>
-      <div>
-        <nav className="flex justify-between items-center h-11 bg-custom-pink">
+      <div className='bg-pink-100'>
+        <nav className="flex justify-between items-center h-11">
           <div className="ml-9 text-white font-bold">Logo</div>
           <ul className="flex justify-between items-center space-x-5 p-10 cursor-pointer">
             <li className="text-white">RoadMap</li>
@@ -28,7 +28,7 @@ const RootLayout: React.FC<MyComponentProps> = ({ children }) => {
           <Tabs />
           <Dropdown />
         </div>
-        {children}
+        {/* {children} */}
       </div>
     </>
   );

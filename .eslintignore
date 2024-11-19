@@ -1,0 +1,4 @@
+*.config.js
+*.css
+app/aws-exports.js
+public/assets

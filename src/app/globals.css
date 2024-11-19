@@ -16,6 +16,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  /* Corrected custom properties */
+  --pink-100: 313, 47%, 51%;
+  --green-100: 175, 74%, 48%;
+  --black-100: 315, 11%, 7%;
+
 }
 
 @media (prefers-color-scheme: light) {
