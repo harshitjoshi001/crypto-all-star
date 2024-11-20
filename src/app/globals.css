@@ -20,8 +20,7 @@
   /* Corrected custom properties */
   --pink-100: 313, 47%, 51%;
   --green-100: 175, 74%, 48%;
-  /* --black-100: 315, 11%, 7%; */
-
+  --black-100: 315, 11%, 7%;
 }
 
 @media (prefers-color-scheme: light) {

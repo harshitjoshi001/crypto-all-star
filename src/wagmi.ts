@@ -1,14 +1,29 @@
 import { http, cookieStorage, createConfig, createStorage } from 'wagmi';
 import { mainnet, sepolia } from 'wagmi/chains';
-import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors';
+import {
+  coinbaseWallet,
+  metaMask,
+  walletConnect,
+} from 'wagmi/connectors';
+
+export const uriConnector  = () =>  walletConnect({
+  showQrModal: false,
+  projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID as string,
+})
+
+
 
 export function getConfig() {
   return createConfig({
     chains: [mainnet, sepolia],
     connectors: [
-      injected(),
+      metaMask(),
+      walletConnect({
+        projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID as string,
+      }),
       coinbaseWallet(),
       walletConnect({
+        showQrModal: false,
         projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID as string,
       }),
     ],
