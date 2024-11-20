@@ -8,10 +8,22 @@ export default {
   ],
   theme: {
     extend: {
+      container: {
+        screens: {
+          sm: '100%', 
+          md: '750px',
+          lg: '900px',
+          xl: '1100px',
+          '2xl': '1360px',
+        },
+      },
       colors: {
         pink: {
-          100: "hsl(var(--pink-100))", // Ensure that --pink-100 is defined in your CSS
+          100: "hsl(var(--pink-100))",
         },
+        green: {
+          100: "hsl(var(--green-100))",
+        }
       },
     },
   },
