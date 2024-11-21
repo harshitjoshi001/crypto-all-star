@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
 const buttonVariants = cva(
-  'relative text-xl min-w-[140px] z-10 uppercase font-extrabold cursor-pointer text-white px-4',
+  'relative text-xl min-w-[140px] z-[1] uppercase font-extrabold cursor-pointer text-white px-4',
   {
     variants: {
       variant: {

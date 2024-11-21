@@ -22,7 +22,11 @@ export default {
           100: "hsl(var(--pink-100))",
         },
         green: {
+          50: "hsl(var(--green-50))",
           100: "hsl(var(--green-100))",
+        },
+        black: {
+          100: "hsl(var(--black-100))",
         }
       },
     },
