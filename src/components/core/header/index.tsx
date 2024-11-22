@@ -27,6 +27,7 @@ import { Providers } from '@/app/providers';
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { connectors, connect } = useConnect();
+  const { chainId, chain } = useAccount();
   const [isBestWalletOpen, setIsBestWalletOpen] = useState(false);
   const isMobile = detectDevice();
   const isSafari = getBrowserName() === 'safari';
@@ -35,7 +36,9 @@ const Header = () => {
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
   const { data: ensName } = useEnsName({ address });
+  const [isChainSwitch, setIsChainSwitch] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const supportedConnectors = [
     {
       id: 'metamask',
@@ -60,6 +63,8 @@ const Header = () => {
   ].filter(
     (connector) => !(isSafari && !isMobile && connector.id === 'MetaMask')
   );
+
+  useEffect(() => {}, [chain]);
 
   useEffect(() => {
     if (isConnected) {
@@ -177,9 +182,14 @@ const Header = () => {
                 </li>
                 <li>
                   <Button
-                    label="Connect Wallet"
+                    label={
+                      address
+                        ? `${address.slice(0, 4)}...${address.slice(-4)}`
+                        : 'Connect Wallet'
+                    }
                     onClick={() => setIsOpen(true)}
-                  ></Button>
+                    className="px-4 py-2 text-white rounded transition"
+                  />
                 </li>
                 <li className="uppercase font-extrabold text-white hover:text-green-100">
                   <Link href="">Language</Link>
@@ -217,6 +227,13 @@ const Header = () => {
       {walletConnect()}
       <Modal onClose={() => setIsOpen(false)} isOpen={isOpen}>
         <div className="flex flex-col space-y-5">{walletOptions()}</div>
+      </Modal>
+      <Modal isOpen={isChainSwitch} onClose={() => setIsChainSwitch(false)}>
+        <h3>Do you want to switch the chain ?</h3>
+        <div>
+          <Button label="Disconnect" />
+          <Button label="Cancel" />
+        </div>
       </Modal>
     </header>
   );
