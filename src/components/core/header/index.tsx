@@ -1,125 +1,30 @@
 'use client';
 
-import { Wallet } from '@/app/constants/const';
-import Dropdown from '@/components/dropdown';
 import Modal from '@/components/Modal';
 import Tabs from '@/components/tabs';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import {
-  useAccount,
-  useConnect,
-  useDisconnect,
-  useEnsAvatar,
-  useEnsName,
-} from 'wagmi';
-import WalletOption from '../wallet';
-import {
-  detectDevice,
-  getBrowserName,
-  getParamWithoutCookie,
-} from '@/lib/utils';
-import { QRCodeSVG } from 'qrcode.react';
+import { useAccount, useDisconnect, useEnsName } from 'wagmi';
+import { WalletOptions } from '../wallet';
 import { Providers } from '@/app/providers';
+import Dropdown from '@/components/dropdown';
+import { LanguagesSelector } from '@/components/LanguageSelector';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { connectors, connect } = useConnect();
-  const { chainId, chain } = useAccount();
-  const [isBestWalletOpen, setIsBestWalletOpen] = useState(false);
-  const isMobile = detectDevice();
-  const isSafari = getBrowserName() === 'safari';
-  const [qrGeneratorUri, setQrGeneratorUri] = useState('');
-  const [showBestWalletQR, setShowBestWalletQR] = useState(false);
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
   const { data: ensName } = useEnsName({ address });
-  const [isChainSwitch, setIsChainSwitch] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const supportedConnectors = [
-    {
-      id: 'metamask',
-      name: Wallet.META_MASK,
-      connector: connectors[0],
-    },
-    {
-      id: 'walletconnect',
-      name: Wallet.WALLET_CONNECT,
-      connector: connectors[1],
-    },
-    {
-      id: 'coinbase',
-      name: Wallet.COINBASE,
-      connector: connectors[2],
-    },
-    {
-      id: 'bestwallet',
-      name: Wallet.BEST_WALLET,
-      connector: connectors[3],
-    },
-  ].filter(
-    (connector) => !(isSafari && !isMobile && connector.id === 'MetaMask')
-  );
-
-  useEffect(() => {}, [chain]);
+  const [isChainSwitch, setIsChainSwitch] = useState(false);
 
   useEffect(() => {
     if (isConnected) {
       setIsOpen(false);
     }
   }, [isConnected]);
-
-  useEffect(() => {
-    if (!isBestWalletOpen) return;
-
-    const getListenWalletConnectEvent = async () => {
-      const provider: any = await connectors[3]?.getProvider();
-      connect({ connector: connectors[3] });
-      if (provider) {
-        provider.on('display_uri', (walletUri: string) => {
-          const bwUrl = getParamWithoutCookie('bwUrl');
-          const link = document.createElement('a');
-          setIsOpen(false);
-          setIsBestWalletOpen(false);
-          setShowBestWalletQR(true);
-          const urlParams = `${walletUri}&callbackUrl=${
-            window.location.href
-          }&browser=${getBrowserName()}`;
-          link.href = `${process.env.NEXT_PUBLIC_BWDEEPLINK}${urlParams}`;
-          if (!isMobile) {
-            setQrGeneratorUri(walletUri);
-          } else if (bwUrl && bwUrl !== '') {
-            link.href = `${bwUrl}${urlParams}`;
-            link.click();
-          } else {
-            link.click();
-          }
-        });
-      }
-    };
-
-    getListenWalletConnectEvent();
-  }, [isMobile, isBestWalletOpen, connectors]);
-
-  const walletOptions = () => {
-    return supportedConnectors.map(({ connector, name, id }) => (
-      <WalletOption
-        connector={connector}
-        key={id}
-        onClick={() => {
-          if (name === Wallet.BEST_WALLET) {
-            setIsBestWalletOpen(true);
-          } else {
-            connect({ connector });
-          }
-        }}
-        name={name}
-      />
-    ));
-  };
 
   const walletConnect = () => {
     if (isConnected) {
@@ -140,7 +45,7 @@ const Header = () => {
     <header className="header bg-pink-100">
       <div className="container mx-auto">
         <div className="row">
-          <nav className="flex md:flex-wrap justify-between items-center py-4">
+          <nav className="flex md:flex-wrap justify-between items-center py-4 px-4 md:px-0">
             <Link href="/" className="flex items-center">
               <Image
                 src="/images/logo.gif"
@@ -154,11 +59,28 @@ const Header = () => {
             {/* mobile header  */}
             {/* <MobileAuthHeader /> */}
             {/* desktop header  */}
+
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen((prev) => !prev);
+              }}
+              className="text-[30px] cursor-pointer md:hidden"
+            >
+              <Image
+                src="/images/menu.png"
+                alt="Menu"
+                width={40}
+                height={40}
+                priority
+              />
+            </button>
+
             <div
-              className="hidden w-full lg:flex lg:w-auto lg:order-1 justify-between items-center space-x-5 cursor-pointer"
+              className={`top-[70px] bg-pink-100 left-0 duration-500 absolute md:static md:w-auto w-full md:h-auto h-[85vh] md:items-center px-5 md:py-0 py-5  
+              lg:flex lg:w-auto lg:order-1 justify-between items-center space-x-5 cursor-pointer ${isMobileMenuOpen ? 'flex' : 'hidden'}`}
               id="mobile-menu-2"
             >
-              <ul className="flex flex-col items-center mt-4 font-medium lg:flex-row lg:space-x-4 lg:mt-0">
+              <ul className="flex md:flex-row flex-col md:items-center md:gap-[2vw] gap-8 mt-4 font-medium lg:mt-0">
                 <li className="uppercase font-extrabold text-white hover:text-green-100">
                   <Link href="">RoadMap</Link>
                 </li>
@@ -191,42 +113,23 @@ const Header = () => {
                     className="px-4 py-2 text-white rounded transition"
                   />
                 </li>
-                <li className="uppercase font-extrabold text-white hover:text-green-100">
-                  <Link href="">Language</Link>
-                </li>
+                <LanguagesSelector />
               </ul>
             </div>
           </nav>
-          <div className="flex items-center justify-between p-4 border-b border-gray-300">
-            <Tabs />
+          <div className="md:flex items-center justify-between border-t border-gray-300/[.5] pt-5 hidden">
+            <div className="mb-[-9px]">
+              <Tabs />
+            </div>
             <Dropdown />
           </div>
         </div>
       </div>
-      {qrGeneratorUri && (
-        <Modal
-          isOpen={showBestWalletQR}
-          onClose={() => setShowBestWalletQR(false)}
-        >
-          <QRCodeSVG
-            value={qrGeneratorUri ? qrGeneratorUri : ''}
-            width="100%"
-            height="100%"
-            level="M"
-            fgColor={'black'}
-            id="qrCodeEl"
-            imageSettings={{
-              src: '/images/connectWallet/BestWallet.svg',
-              height: 33,
-              width: 33,
-              excavate: false,
-            }}
-          />
-        </Modal>
-      )}
       {walletConnect()}
       <Modal onClose={() => setIsOpen(false)} isOpen={isOpen}>
-        <div className="flex flex-col space-y-5">{walletOptions()}</div>
+        <div className="flex flex-col space-y-5">
+          <WalletOptions />
+        </div>
       </Modal>
       <Modal isOpen={isChainSwitch} onClose={() => setIsChainSwitch(false)}>
         <h3>Do you want to switch the chain ?</h3>
