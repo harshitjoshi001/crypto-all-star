@@ -1,5 +1,5 @@
 import { Wallet } from '@/app/constants/const';
-import Modal from '@/components/Modal';
+import Modal from '@/components/modal';
 import { Button } from '@/components/ui/button';
 import {
   detectDevice,
@@ -76,7 +76,6 @@ export const WalletOptions = ({
   const { disconnect, disconnectAsync } = useDisconnect();
   const { isConnected } = useAccount();
   const { switchChainAsync } = useSwitchChain();
-  const [isOpen, setIsOpen] = useState(false);
   const currentSelectedChain = sessionStorage.getItem('current_chain_id');
 
   useEffect(() => {
@@ -165,11 +164,25 @@ export const WalletOptions = ({
         return;
       }
 
-    
-
       const response = await connectAsync({
         connector: wallet,
       });
+      if (process.env.NODE_ENV === 'production' && response.chainId !== 1) {
+        // await switchChainAsync({ chainId: 56 });
+      }
+      if (
+        process.env.NODE_ENV !== 'production' &&
+        response.chainId !== 11155111
+      ) {
+        await switchChainAsync({ chainId: 11155111 });
+      }
+      if (!response.accounts) {
+        // setIsLoading(false);
+        // return setErrorMessage(ERRORS.NO_ACCOUNT_FOUND);
+      }
+      if (response.accounts.length > 1) {
+        // return setErrorMessage(ERRORS.MULTIPLE_ACCOUNT_ERR);
+      }
     } catch (error) {
       // handleError(error);
       console.log(error, 'errorrrrr');
@@ -193,9 +206,6 @@ export const WalletOptions = ({
           name={name}
         />
       ))}
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <></>
-      </Modal>
       {qrGeneratorUri && (
         <Modal
           isOpen={showBestWalletQR}

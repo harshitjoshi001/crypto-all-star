@@ -1,18 +1,18 @@
 import { http, cookieStorage, createConfig, createStorage } from 'wagmi';
-import { mainnet, sepolia , baseSepolia , base , bsc , bscTestnet} from 'wagmi/chains';
+import { mainnet, sepolia , baseSepolia , base , bsc , bscTestnet, opBNB, opBNBTestnet} from 'wagmi/chains';
 import {
   coinbaseWallet,
   metaMask,
   walletConnect,
 } from 'wagmi/connectors';
 
-let chains : any = [];
+let chains : any = [] ;
 
-chains = process.env.NODE_ENV === 'production' ? [...chains , mainnet , base ] : [...chains , baseSepolia , sepolia ]  ;
- 
+ chains = process.env.NODE_ENV === 'production' ? [...chains , mainnet , base  ] : [...chains , sepolia , baseSepolia] ;
+
 export function getConfig() {
   return createConfig({
-    chains: [sepolia , baseSepolia],
+    chains: chains,
     connectors: [
       metaMask(),
       walletConnect({

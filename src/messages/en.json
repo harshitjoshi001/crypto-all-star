@@ -16,5 +16,9 @@
     "LastMemeStanding":"Last Meme Standing",
     "StakingHistory":"Staking History",
     "Stake": "Stake"
+  },
+  "Modals": {
+    "Disconnect": "Disconnect",
+    "SwitchChain": "Do you want to switch the chain ?"
   }
 }

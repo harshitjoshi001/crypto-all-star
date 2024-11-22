@@ -1,13 +1,13 @@
 'use client';
 
-import Modal from '@/components/Modal';
+import Modal from './modal';
 import Tabs from '@/components/tabs';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useAccount, useDisconnect, useEnsName } from 'wagmi';
-import { WalletOptions } from '../wallet';
+import { WalletOptions } from './core/wallet';
 import { Providers } from '@/app/providers';
 import Dropdown from '@/components/dropdown';
 import { LanguagesSelector } from '@/components/LanguageSelector';
@@ -22,6 +22,7 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isChainSwitch, setIsChainSwitch] = useState(false);
   const t = useTranslations('Header');
+  const modal = useTranslations('Modals');
 
   useEffect(() => {
     if (isConnected) {
@@ -47,7 +48,7 @@ const Header = () => {
             <div>{ensName ? `${ensName} (${address})` : address}</div>
           )}
           <button onClick={() => disconnect()} className="bg-red-500 p-3 m-2">
-            Disconnect
+            {modal('Disconnect')}
           </button>
         </Providers>
       );
@@ -66,16 +67,17 @@ const Header = () => {
               label="Ok"
               onClick={async () => {
                 disconnect();
+                setIsChainSwitch(false);
               }}
             />
-            <Button label="Cancel" />
+            <Button label="Cancel" onClick={() => setIsChainSwitch(false)} />
           </div>
         </>
       );
     } else if (chainId) {
       return (
         <>
-          <h3>Do you want to switch the chain ?</h3>
+          <h3>{modal('SwitchChain')}</h3>
           <div className="flex justify-around">
             <Button label="Ok" onClick={async () => {}} />
             <Button label="Cancel" />

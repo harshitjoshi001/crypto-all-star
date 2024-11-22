@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Modal from './Modal';
+import Modal from './modal';
 import { Button } from './ui/button';
 import { useAccount, useSwitchChain } from 'wagmi';
 import {
