@@ -27,6 +27,9 @@ export default {
         },
         black: {
           100: "hsl(var(--black-100))",
+        },
+        purple: {
+          100: "hsl(var(--purple-100))",
         }
       },
     },

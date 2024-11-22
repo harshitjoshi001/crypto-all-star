@@ -66,17 +66,10 @@ const Dropdown: React.FC<DropdowmInterface> = ({ options }) => {
           </div>
           <ArrowDown />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="relative min-w-[230px] p-[10px] bg-green-50 rounded-lg border-2 border-green-100">
-          {/* <Image
-                  src="/images/dropdown.png"
-                  alt="Button Logo"
-                  layout="fill"
-                  priority
-                  className="absolute inset-0 z-[-1]"
-                /> */}
+        <DropdownMenuContent className="relative min-w-[230px] p-[10px] bg-white rounded-lg border-2 border-pink-100">
           <DropdownMenuItem
             onClick={() => setValue(11155111)}
-            className="rounded font-extrabold text-black-100 p-2 hover:text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 capitalize"
+            className="rounded font-extrabold text-black-100 p-2 text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 capitalize"
           >
             <Image
               src="/images/ar.svg"
@@ -89,7 +82,7 @@ const Dropdown: React.FC<DropdowmInterface> = ({ options }) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => setValue(84531)}
-            className="rounded font-extrabold text-black-100 p-2 hover:text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 capitalize"
+            className="rounded font-extrabold text-black-100 p-2 text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 capitalize"
           >
             <Image
               src="/images/ar.svg"
@@ -102,7 +95,7 @@ const Dropdown: React.FC<DropdowmInterface> = ({ options }) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => setValue(97)}
-            className="rounded font-extrabold text-black-100 p-2 hover:text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 capitalize"
+            className="rounded font-extrabold text-black-100 p-2 text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 capitalize"
           >
             <Image
               src="/images/ar.svg"

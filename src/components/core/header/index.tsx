@@ -56,8 +56,6 @@ const Header = () => {
                 priority
               />
             </Link>
-            {/* mobile header  */}
-            {/* <MobileAuthHeader /> */}
             {/* desktop header  */}
 
             <button
@@ -76,8 +74,8 @@ const Header = () => {
             </button>
 
             <div
-              className={`top-[70px] bg-pink-100 left-0 duration-500 absolute md:static md:w-auto w-full md:h-auto h-[85vh] md:items-center px-5 md:py-0 py-5  
-              lg:flex lg:w-auto lg:order-1 justify-between items-center space-x-5 cursor-pointer ${isMobileMenuOpen ? 'flex' : 'hidden'}`}
+              className={`left-0 top-[70px] bg-pink-100 duration-500 absolute md:static md:w-auto w-full md:h-auto h-[89vh] md:items-center px-5 md:py-0 py-5  
+              lg:flex lg:w-auto lg:order-1 justify-between items-center space-x-5 cursor-pointer flex md:hidden ${isMobileMenuOpen ? 'left-0' : 'left-[-100%]'}`}
               id="mobile-menu-2"
             >
               <ul className="flex md:flex-row flex-col md:items-center md:gap-[2vw] gap-8 mt-4 font-medium lg:mt-0">

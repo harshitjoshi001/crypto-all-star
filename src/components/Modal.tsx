@@ -1,5 +1,8 @@
 'use client';
+import Image from 'next/image';
+import Link from 'next/link';
 import React, { useEffect } from 'react';
+import WalletIcon from '../../public/icon/Wallet';
 
 type ModalProps = {
   isOpen: boolean;
@@ -27,13 +30,23 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   return (
     <>
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
-          <div className="flex justify-end">
-            <button onClick={onClose} className="text-black m-3">
-              x
+        <div className="bg-purple-100 p-6 rounded-lg shadow-lg max-w-sm w-full">
+          <div className="flex justify-center items-center mb-4">
+            <h3 className='text-center text-white w-full m-auto font-semibold font-lg'>Connect Wallet</h3>
+            <button onClick={onClose} className="text-black m-3 ml-auto">
+              <Image
+                src="/images/close-white.svg"
+                alt="Close"
+                width="25"
+                height="25"
+                className=""
+                priority
+              />
             </button>
           </div>
           <div>{children}</div>
+          <Link href="/" className='border border-white/[.3] text-white flex items-center justify-center w-full mt-4 px-3 pt-2 py-3'>
+          <WalletIcon className="mr-2" />I don’t have a wallet</Link>
         </div>
       </div>
     </>

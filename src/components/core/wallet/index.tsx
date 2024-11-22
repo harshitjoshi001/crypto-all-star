@@ -6,6 +6,7 @@ import {
   getBrowserName,
   getParamWithoutCookie,
 } from '@/lib/utils';
+import Image from 'next/image';
 import { QRCodeSVG } from 'qrcode.react';
 import React, { useEffect, useState } from 'react';
 import { Connector, useAccount, useConnect, useDisconnect } from 'wagmi';
@@ -31,10 +32,25 @@ function WalletOption({
   return (
     <button
       disabled={!ready}
-      className="rounded bg-gray-400 p-4"
+      className="relative text-xl min-w-[140px] z-[1] uppercase font-extrabold cursor-pointer text-white px-4 min-h-[60px] flex items-center"
       onClick={onClick}
     >
-      {name}
+      <Image
+        src="/images/pink-btn.png"
+        alt="Button Image"
+        layout="fill"
+        priority
+        className="absolute inset-0 z-[-1]"
+      />
+      <span className='mb-3 text-lg'>{name}</span>
+      <Image
+        // src={`/images/connectWallet/${item?.id}.svg`}
+        src="/images/metamask.svg"
+        alt="logo"
+        width="24"
+        height="24"
+        className='mb-3 ml-auto mr-3'
+      />
     </button>
   );
 }
