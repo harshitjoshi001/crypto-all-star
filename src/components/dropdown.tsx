@@ -125,7 +125,13 @@ const Dropdown: React.FC<DropdowmInterface> = ({ options }) => {
         <div>
           <h1>You will have to switch the chain , want to switch ?</h1>
           <div className="flex justify-around">
-            <Button label="Cancel" onClick={() => setIsOpen(false)} />
+            <Button
+              label="Cancel"
+              onClick={() => {
+                setValue(currentChain);
+                setIsOpen(false);
+              }}
+            />
             <Button label="Ok" onClick={handleSwitch} />
           </div>
         </div>

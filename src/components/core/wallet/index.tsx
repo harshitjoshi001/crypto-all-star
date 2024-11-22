@@ -61,7 +61,11 @@ function WalletOption({
   );
 }
 
-export const WalletOptions = () => {
+export const WalletOptions = ({
+  setIsOpen,
+}: {
+  setIsOpen: (boolean: boolean) => void;
+}) => {
   const { connectors, connect, connectAsync } = useConnect();
   const isMobile = detectDevice();
   const isSafari = getBrowserName() === 'safari';
@@ -136,7 +140,7 @@ export const WalletOptions = () => {
       <>
         <h3>Do you want to disconnect ?</h3>
         <div className="flex justify-around">
-          <Button label="Cancel" />
+          <Button label="Cancel" onClick={() => setIsOpen(false)} />
           <Button
             label="Ok"
             onClick={() => {

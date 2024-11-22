@@ -11,6 +11,7 @@ import { WalletOptions } from '../wallet';
 import { Providers } from '@/app/providers';
 import Dropdown from '@/components/dropdown';
 import { LanguagesSelector } from '@/components/LanguageSelector';
+import { useTranslations } from 'next-intl';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +21,7 @@ const Header = () => {
   const { chain, chainId } = useAccount();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isChainSwitch, setIsChainSwitch] = useState(false);
+  const t = useTranslations('Header');
 
   useEffect(() => {
     if (isConnected) {
@@ -35,7 +37,7 @@ const Header = () => {
 
   console.log(chainId, 'chain id detect');
 
-  const shouldModalOpen = chainId && isChainSwitch;
+  const shouldModalOpen = !!chainId && isChainSwitch;
 
   const walletConnect = () => {
     if (isConnected) {
@@ -60,7 +62,12 @@ const Header = () => {
             You connected to unsupported chain , do you want to disconnect ?
           </h3>
           <div className="flex justify-around">
-            <Button label="Ok" onClick={() => disconnect()} />
+            <Button
+              label="Ok"
+              onClick={async () => {
+                disconnect();
+              }}
+            />
             <Button label="Cancel" />
           </div>
         </>
@@ -117,32 +124,32 @@ const Header = () => {
             >
               <ul className="flex md:flex-row flex-col md:items-center md:gap-[2vw] gap-8 mt-4 font-medium lg:mt-0">
                 <li className="uppercase font-extrabold text-white hover:text-green-100">
-                  <Link href="">RoadMap</Link>
+                  <Link href="">{t('RoadMap')}</Link>
                 </li>
                 <li className="uppercase font-extrabold text-white hover:text-green-100">
-                  <Link href="">Tokenomics</Link>
+                  <Link href="">{t('Tokenomics')}</Link>
                 </li>
                 <li className="uppercase font-extrabold text-white hover:text-green-100">
-                  <Link href="">How To Buy</Link>
+                  <Link href="">{t('HowToBuy')}</Link>
                 </li>
                 <li className="uppercase font-extrabold text-white hover:text-green-100">
-                  <Link href="">FAQ</Link>
+                  <Link href="">{t('FAQ')}</Link>
                 </li>
                 <li className="uppercase font-extrabold text-white hover:text-green-100">
-                  <Link href="">White Paper</Link>
+                  <Link href="">{t('WhitePaper')}</Link>
                 </li>
                 <li className="uppercase font-extrabold text-white hover:text-green-100">
-                  <Link href="">Audit</Link>
+                  <Link href="">{t('Audit')}</Link>
                 </li>
                 <li className="uppercase font-extrabold text-white hover:text-green-100">
-                  <Link href="">All Memes</Link>
+                  <Link href="">{t('AllMemes')}</Link>
                 </li>
                 <li>
                   <Button
                     label={
                       address
                         ? `${address.slice(0, 4)}...${address.slice(-4)}`
-                        : 'Connect Wallet'
+                        : t('ConnectWallet')
                     }
                     onClick={() => setIsOpen(true)}
                     className="px-4 py-2 text-white rounded transition"
@@ -163,7 +170,7 @@ const Header = () => {
       {walletConnect()}
       <Modal onClose={() => setIsOpen(false)} isOpen={isOpen}>
         <div className="flex flex-col space-y-5">
-          <WalletOptions />
+          <WalletOptions setIsOpen={setIsOpen} />
         </div>
       </Modal>
       <Modal isOpen={shouldModalOpen} onClose={() => setIsChainSwitch(false)}>

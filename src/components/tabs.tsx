@@ -1,9 +1,11 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState(1);
+  const t = useTranslations('Header');
 
   return (
     <div className="flex space-x-8">
@@ -12,21 +14,21 @@ const Tabs = () => {
           ${activeTab === 1 ? 'border-white text-white' : 'text-white/[.5] hover:text-white hover:border-white'}`}
         onClick={() => setActiveTab(1)}
       >
-        Stake
+        {t('Stake')}
       </button>
       <button
         className={`py-2 px-4 text-lg font-semibold border-b-4 border-transparent uppercase
           ${activeTab === 2 ? 'border-white text-white' : 'text-white/[.5] hover:text-white hover:border-white'}`}
         onClick={() => setActiveTab(2)}
       >
-        Last Meme Standing
+        {t('LastMemeStanding')}
       </button>
       <button
         className={`py-2 px-4 text-lg font-semibold border-b-4 border-transparent uppercase
           ${activeTab === 3 ? 'border-white text-white' : 'text-white/[.5] hover:text-white hover:border-white'}`}
         onClick={() => setActiveTab(3)}
       >
-        Staking History
+        {t('StakingHistory')}
       </button>
     </div>
   );
