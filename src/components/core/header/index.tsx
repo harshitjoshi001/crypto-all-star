@@ -17,6 +17,7 @@ const Header = () => {
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
   const { data: ensName } = useEnsName({ address });
+  const { chain, chainId } = useAccount();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isChainSwitch, setIsChainSwitch] = useState(false);
 
@@ -25,6 +26,16 @@ const Header = () => {
       setIsOpen(false);
     }
   }, [isConnected]);
+
+  useEffect(() => {
+    if (chainId && chain) {
+      setIsChainSwitch(true);
+    }
+  }, [chainId]);
+
+  console.log(chainId, 'chain id detect');
+
+  const shouldModalOpen = chainId && isChainSwitch;
 
   const walletConnect = () => {
     if (isConnected) {
@@ -37,6 +48,32 @@ const Header = () => {
             Disconnect
           </button>
         </Providers>
+      );
+    }
+  };
+
+  const renderSwitchModal = () => {
+    if (!chain && chainId) {
+      return (
+        <>
+          <h3>
+            You connected to unsupported chain , do you want to disconnect ?
+          </h3>
+          <div className="flex justify-around">
+            <Button label="Ok" onClick={() => disconnect()} />
+            <Button label="Cancel" />
+          </div>
+        </>
+      );
+    } else if (chainId) {
+      return (
+        <>
+          <h3>Do you want to switch the chain ?</h3>
+          <div className="flex justify-around">
+            <Button label="Ok" onClick={async () => {}} />
+            <Button label="Cancel" />
+          </div>
+        </>
       );
     }
   };
@@ -129,12 +166,8 @@ const Header = () => {
           <WalletOptions />
         </div>
       </Modal>
-      <Modal isOpen={isChainSwitch} onClose={() => setIsChainSwitch(false)}>
-        <h3>Do you want to switch the chain ?</h3>
-        <div>
-          <Button label="Disconnect" />
-          <Button label="Cancel" />
-        </div>
+      <Modal isOpen={shouldModalOpen} onClose={() => setIsChainSwitch(false)}>
+        {renderSwitchModal()}
       </Modal>
     </header>
   );

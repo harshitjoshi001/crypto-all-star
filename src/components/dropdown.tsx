@@ -21,15 +21,20 @@ interface DropdowmInterface {
 
 const coinValues: any = {
   11155111: 'Ethereum',
-  84531: 'Base',
+  84532: 'Base',
   97: 'Binance',
 };
 
 const Dropdown: React.FC<DropdowmInterface> = ({ options }) => {
   const [value, setValue] = useState<any>(11155111);
   const [isOpen, setIsOpen] = useState(false);
-  const { switchChain, switchChainAsync } = useSwitchChain();
-  const { chainId } = useAccount();
+  const { switchChainAsync } = useSwitchChain();
+  const [currentChain, setCurrentChain] = useState(11155111);
+  const { chainId, chain } = useAccount();
+
+  useEffect(() => {
+    sessionStorage.setItem('current_chain_id', JSON.stringify(11155111));
+  }, []);
 
   useEffect(() => {
     if (chainId) {
@@ -39,8 +44,16 @@ const Dropdown: React.FC<DropdowmInterface> = ({ options }) => {
     }
   }, [value]);
 
+  useEffect(() => {
+    if (!chainId) {
+      console.log('called');
+    }
+  }, [chainId]);
+
   const handleSwitch = async () => {
-    await switchChain({ chainId: value });
+    await switchChainAsync({ chainId: value });
+    setIsOpen(false);
+    sessionStorage.setItem('current_chain_id', JSON.stringify(value));
   };
 
   return (
@@ -81,8 +94,8 @@ const Dropdown: React.FC<DropdowmInterface> = ({ options }) => {
             Ethereum
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => setValue(84531)}
-            className="rounded font-extrabold text-black-100 p-2 text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 capitalize"
+            onClick={() => setValue(84532)}
+            className="rounded font-extrabold text-black-100 p-2 hover:text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 capitalize"
           >
             <Image
               src="/images/ar.svg"
@@ -113,7 +126,7 @@ const Dropdown: React.FC<DropdowmInterface> = ({ options }) => {
           <h1>You will have to switch the chain , want to switch ?</h1>
           <div className="flex justify-around">
             <Button label="Cancel" onClick={() => setIsOpen(false)} />
-            <Button label="Switch" onClick={handleSwitch} />
+            <Button label="Ok" onClick={handleSwitch} />
           </div>
         </div>
       </Modal>

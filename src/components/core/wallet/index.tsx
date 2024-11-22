@@ -9,7 +9,13 @@ import {
 import Image from 'next/image';
 import { QRCodeSVG } from 'qrcode.react';
 import React, { useEffect, useState } from 'react';
-import { Connector, useAccount, useConnect, useDisconnect } from 'wagmi';
+import {
+  Connector,
+  useAccount,
+  useConnect,
+  useDisconnect,
+  useSwitchChain,
+} from 'wagmi';
 
 function WalletOption({
   connector,
@@ -42,35 +48,37 @@ function WalletOption({
         priority
         className="absolute inset-0 z-[-1]"
       />
-      <span className='mb-3 text-lg'>{name}</span>
+      <span className="mb-3 text-lg">{name}</span>
       <Image
         // src={`/images/connectWallet/${item?.id}.svg`}
         src="/images/metamask.svg"
         alt="logo"
         width="24"
         height="24"
-        className='mb-3 ml-auto mr-3'
+        className="mb-3 ml-auto mr-3"
       />
     </button>
   );
 }
 
 export const WalletOptions = () => {
-  const { connectors, connect } = useConnect();
+  const { connectors, connect, connectAsync } = useConnect();
   const isMobile = detectDevice();
   const isSafari = getBrowserName() === 'safari';
   const [isBestWalletOpen, setIsBestWalletOpen] = useState(false);
   const [showBestWalletQR, setShowBestWalletQR] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const [qrGeneratorUri, setQrGeneratorUri] = useState('');
   const { chainId } = useAccount();
-  const { disconnect } = useDisconnect();
+  const { disconnect, disconnectAsync } = useDisconnect();
+  const { isConnected } = useAccount();
+  const { switchChainAsync } = useSwitchChain();
+  const [isOpen, setIsOpen] = useState(false);
+  const currentSelectedChain = sessionStorage.getItem('current_chain_id');
 
   useEffect(() => {
     if (!isBestWalletOpen) return;
 
     const getListenWalletConnectEvent = async () => {
-      console.log('called');
       const provider: any = await connectors[3]?.getProvider();
       connect({ connector: connectors[3] });
       if (provider) {
@@ -125,13 +133,44 @@ export const WalletOptions = () => {
 
   if (chainId) {
     return (
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+      <>
         <h3>Do you want to disconnect ?</h3>
-        <Button label="Cancel" onClick={() => setIsOpen(false)} />
-        <Button label="Disconnect" onClick={() => disconnect()} />
-      </Modal>
+        <div className="flex justify-around">
+          <Button label="Cancel" />
+          <Button
+            label="Ok"
+            onClick={() => {
+              disconnect();
+            }}
+          />
+        </div>
+      </>
     );
   }
+
+  const handleWalletConnection = async (wallet: Connector) => {
+    try {
+      const provider = await wallet.getProvider();
+      if (isConnected) {
+        await disconnectAsync();
+      }
+
+      if (!provider && isMobile && typeof window !== 'undefined') {
+        const metaMaskDeepLink = `https://metamask.app.link/dapp/${window.origin}`;
+        window.location.href = metaMaskDeepLink;
+        return;
+      }
+
+    
+
+      const response = await connectAsync({
+        connector: wallet,
+      });
+    } catch (error) {
+      // handleError(error);
+      console.log(error, 'errorrrrr');
+    }
+  };
 
   return (
     <>
@@ -143,12 +182,16 @@ export const WalletOptions = () => {
             if (name === Wallet.BEST_WALLET) {
               setIsBestWalletOpen(true);
             } else {
-              connect({ connector });
+              // connect({ connector });
+              handleWalletConnection(connector);
             }
           }}
           name={name}
         />
       ))}
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <></>
+      </Modal>
       {qrGeneratorUri && (
         <Modal
           isOpen={showBestWalletQR}
