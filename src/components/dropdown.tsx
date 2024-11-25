@@ -62,7 +62,7 @@ const Dropdown: React.FC<DropdowmInterface> = ({ options }) => {
           />
           <div className="flex items-center my-2 text-black-100">
             <Image
-              src="/images/ar.svg"
+              src="/images/dropdownIcons/Ethereum.svg"
               alt="Flag"
               width={25}
               height={25}
@@ -78,7 +78,7 @@ const Dropdown: React.FC<DropdowmInterface> = ({ options }) => {
             className="rounded font-extrabold text-black-100 p-2 text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 capitalize"
           >
             <Image
-              src="/images/ar.svg"
+              src="/images/dropdownIcons/Binance.svg"
               alt="Flag"
               width={25}
               height={25}
@@ -87,17 +87,30 @@ const Dropdown: React.FC<DropdowmInterface> = ({ options }) => {
             Ethereum
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => handleChange(84532)}
-            className="rounded font-extrabold text-black-100 p-2 hover:text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 capitalize"
+            onClick={() => setValue(11155111)}
+            className="rounded font-extrabold uppercase p-2 text-black hover:text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 "
           >
             <Image
-              src="/images/ar.svg"
+              src="/images/dropdownIcons/Ethereum.svg"
               alt="Flag"
               width={25}
               height={25}
               className="mr-2 border-2 border-white rounded-full overflow-hidden object-cover h-[25px]"
             />
             Base
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => handleChange(84532)}
+            className="rounded font-extrabold text-black-100 p-2 hover:text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 capitalize"
+          >
+            <Image
+              src="/images/dropdownIcons/Coinbase.svg"
+              alt="Flag"
+              width={25}
+              height={25}
+              className="mr-2 border-2 border-white rounded-full overflow-hidden object-cover h-[25px]"
+            />
+            Binance
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => handleChange(97)}

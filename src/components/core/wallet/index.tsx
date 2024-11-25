@@ -22,10 +22,12 @@ function WalletOption({
   connector,
   onClick,
   name,
+  imgPath,
 }: {
   connector: Connector;
   onClick: () => void;
   name: string;
+  imgPath: string;
 }) {
   const [ready, setReady] = React.useState(false);
 
@@ -39,7 +41,7 @@ function WalletOption({
   return (
     <button
       disabled={!ready}
-      className="relative text-xl min-w-[140px] z-[1] uppercase font-extrabold cursor-pointer text-white px-4 min-h-[60px] flex items-center"
+      className="group relative text-xl min-w-[140px] z-[1] uppercase font-extrabold cursor-pointer text-white px-4 min-h-[60px] flex items-center"
       onClick={onClick}
     >
       <Image
@@ -47,12 +49,11 @@ function WalletOption({
         alt="Button Image"
         layout="fill"
         priority
-        className="absolute inset-0 z-[-1]"
+        className="absolute inset-0 z-[-1] group-hover:opacity-50"
       />
       <span className="mb-3 text-lg">{name}</span>
       <Image
-        // src={`/images/connectWallet/${item?.id}.svg`}
-        src="/images/metamask.svg"
+        src={`/images/connectWallet/${imgPath}.svg`}
         alt="logo"
         width="24"
         height="24"
@@ -198,6 +199,7 @@ export const WalletOptions = () => {
             }
           }}
           name={name}
+          imgPath={id}
         />
       ))}
       {qrGeneratorUri && (

@@ -91,7 +91,7 @@ const Header = () => {
     <header className="header bg-pink-100">
       <div className="container mx-auto">
         <div className="row">
-          <nav className="flex md:flex-wrap justify-between items-center py-4 px-4 md:px-0">
+          <nav className="flex lg:flex-wrap justify-between items-center py-4 px-4 md:px-0">
             <Link href="/" className="flex items-center">
               <Image
                 src="/images/logo.gif"
@@ -108,7 +108,7 @@ const Header = () => {
               onClick={() => {
                 setIsMobileMenuOpen((prev) => !prev);
               }}
-              className="text-[30px] cursor-pointer md:hidden"
+              className="text-[30px] cursor-pointer lg:hidden"
             >
               <Image
                 src="/images/menu.png"
@@ -120,11 +120,11 @@ const Header = () => {
             </button>
 
             <div
-              className={`left-0 top-[70px] bg-pink-100 duration-500 absolute md:static md:w-auto w-full md:h-auto h-[89vh] md:items-center px-5 md:py-0 py-5  
-              lg:flex lg:w-auto lg:order-1 justify-between items-center space-x-5 cursor-pointer flex md:hidden ${isMobileMenuOpen ? 'left-0' : 'left-[-100%]'}`}
+              className={`left-0 top-[70px] bg-pink-100 duration-500 absolute lg:static w-full lg:h-auto h-[89vh] lg:items-center px-5 lg:py-0 py-5  
+              lg:w-auto lg:order-1 justify-between items-center space-x-5 cursor-pointer flex ${isMobileMenuOpen ? 'left-0' : 'left-[-100%]'}`}
               id="mobile-menu-2"
             >
-              <ul className="flex md:flex-row flex-col md:items-center md:gap-[2vw] gap-8 mt-4 font-medium lg:mt-0">
+              <ul className="flex lg:flex-row flex-col lg:items-center lg:gap-[2vw] gap-8 mt-4 font-medium lg:mt-0">
                 <li className="uppercase font-extrabold text-white hover:text-green-100">
                   <Link href="">{t('RoadMap')}</Link>
                 </li>
@@ -154,7 +154,7 @@ const Header = () => {
                         : t('ConnectWallet')
                     }
                     onClick={() => setIsOpen(true)}
-                    className="px-4 py-2 text-white rounded transition"
+                    className="px-4 py-2 text-white rounded transition "
                   />
                 </li>
                 <LanguagesSelector />
@@ -162,7 +162,7 @@ const Header = () => {
             </div>
           </nav>
           <div className="md:flex items-center justify-between border-t border-gray-300/[.5] pt-5 hidden">
-            <div className="mb-[-9px]">
+            <div className="mb-[-10px]">
               <Tabs />
             </div>
             <Dropdown />
