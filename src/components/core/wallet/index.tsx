@@ -1,7 +1,7 @@
 import { ChainContext } from '@/app/[locale]';
 import { Wallet } from '@/app/constants/const';
-import Modal from '@/components/Modal';
-import { Button } from '@/components/ui/button';
+import Modal from '@/components/Common/Modal';
+import { Button } from '@/components/UI/button';
 import {
   detectDevice,
   getBrowserName,
@@ -17,51 +17,7 @@ import {
   useDisconnect,
   useSwitchChain,
 } from 'wagmi';
-
-function WalletOption({
-  connector,
-  onClick,
-  name,
-  imgPath,
-}: {
-  connector: Connector;
-  onClick: () => void;
-  name: string;
-  imgPath: string;
-}) {
-  const [ready, setReady] = React.useState(false);
-
-  React.useEffect(() => {
-    (async () => {
-      const provider = await connector.getProvider();
-      setReady(!!provider);
-    })();
-  }, [connector]);
-
-  return (
-    <button
-      disabled={!ready}
-      className="group relative text-xl min-w-[140px] z-[1] uppercase font-extrabold cursor-pointer text-white px-4 min-h-[60px] flex items-center"
-      onClick={onClick}
-    >
-      <Image
-        src="/images/pink-btn.png"
-        alt="Button Image"
-        layout="fill"
-        priority
-        className="absolute inset-0 z-[-1] group-hover:opacity-50"
-      />
-      <span className="mb-3 text-lg">{name}</span>
-      <Image
-        src={`/images/connectWallet/${imgPath}.svg`}
-        alt="logo"
-        width="24"
-        height="24"
-        className="mb-3 ml-auto mr-3"
-      />
-    </button>
-  );
-}
+import WalletOption from './walletOption';
 
 export const WalletOptions = () => {
   const { connectors, connect, connectAsync } = useConnect();
@@ -76,7 +32,7 @@ export const WalletOptions = () => {
   const { currentChain } = useContext(ChainContext);
   const [popMessage, setPopMessage] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { chain, chainId } = useAccount();
+  const { chainId } = useAccount();
   const [currentWallet, setCurrentWallet] = useState<any>();
 
   useEffect(() => {
@@ -169,7 +125,7 @@ export const WalletOptions = () => {
         connector: wallet,
       });
     } catch (error) {
-      console.log(error, 'errorrrrr');
+      console.log(error, 'error');
     }
   };
 
@@ -189,7 +145,6 @@ export const WalletOptions = () => {
             if (name === Wallet.BEST_WALLET) {
               setIsBestWalletOpen(true);
             } else {
-              // connect({ connector });
               handleWalletConnection(connector);
             }
           }}

@@ -1,8 +1,8 @@
 'use client';
 
 import { useContext, useEffect, useState } from 'react';
-import Modal from './Modal';
-import { Button } from './ui/button';
+import Modal from '../Modal';
+import { Button } from '@/components/UI/button';
 import { useAccount, useSwitchChain } from 'wagmi';
 import {
   DropdownMenu,
@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
 import Image from 'next/image';
-import ArrowDown from '../../public/icon/ArrowDown';
+import ArrowDown from '../../../../public/icon/ArrowDown';
 import { ChainContext } from '@/app/[locale]';
 
 interface DropdowmInterface {

@@ -1,15 +1,14 @@
 'use client';
 
-import Modal from './Modal';
+import Modal from '../Common/Modal';
 import Tabs from '@/components/tabs';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/UI/button';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useContext, useEffect, useState } from 'react';
 import { useAccount, useDisconnect, useEnsName, useSwitchChain } from 'wagmi';
-import { WalletOptions } from './core/wallet';
-import { Providers } from '@/app/providers';
-import Dropdown from '@/components/dropdown';
+import { WalletOptions } from '../Core/wallet';
+import Dropdown from '../Common/Dropdown';
 import { LanguagesSelector } from '@/components/LanguageSelector';
 import { useTranslations } from 'next-intl';
 import { ChainContext } from '@/app/[locale]';
@@ -18,7 +17,6 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
-  const { data: ensName } = useEnsName({ address });
   const { chain, chainId } = useAccount();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { switchChainAsync } = useSwitchChain();
@@ -34,21 +32,6 @@ const Header = () => {
       setIsChainSupported(true);
     }
   }, [chain]);
-
-  const walletConnect = () => {
-    if (isConnected) {
-      return (
-        <Providers>
-          {address && (
-            <div>{ensName ? `${ensName} (${address})` : address}</div>
-          )}
-          <button onClick={() => disconnect()} className="bg-red-500 p-3 m-2">
-            {modal('Disconnect')}
-          </button>
-        </Providers>
-      );
-    }
-  };
 
   const renderSwitchModal = () => {
     if (!chain && chainId) {
@@ -171,7 +154,6 @@ const Header = () => {
           </div>
         </div>
       </div>
-      {walletConnect()}
       <Modal onClose={() => setIsOpen(false)} isOpen={isOpen}>
         <div className="flex flex-col space-y-5">
           <WalletOptions />

@@ -5,7 +5,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-
 export const detectDevice = () => {
   if (typeof window === 'undefined') return false;
   const userAgent = window.navigator.userAgent;
@@ -19,14 +18,13 @@ export const detectDevice = () => {
     /Windows Phone/i,
   ];
 
-  return devices.some(device => device.test(userAgent));
+  return devices.some((device) => device.test(userAgent));
 };
 
 export const getParamWithoutCookie = (paramName: string) => {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(paramName) ?? '';
 };
-
 
 export const getBrowserName = () => {
   if (typeof window === 'undefined') return 'undefined';

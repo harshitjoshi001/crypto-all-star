@@ -1,7 +1,6 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { Key } from 'lucide-react';
 import { useState } from 'react';
 import DollarIcon from '../../public/icon/DollarIcon';
 import CupIcon from '../../public/icon/CupIcon';
@@ -28,7 +27,7 @@ const Tabs = ({ variant }: { variant?: string }) => {
         <DollarIcon
           className={`mr-2 group-hover:text-pink-100 group-hover:fill-white ${activeTab === 1 ? 'text-pink-100 fill-white' : 'text-white'}`}
         />
-       {t('Stake')}
+        {t('Stake')}
       </button>
       <button
         className={`group py-2 px-4 text-lg font-semibold border-b-4 border-transparent uppercase flex items-center
@@ -36,8 +35,11 @@ const Tabs = ({ variant }: { variant?: string }) => {
         onClick={() => setActiveTab(2)}
       >
         <CupIcon
-          className={`mr-2 text-white group-hover:text-pink-100 group-hover:fill-white ${activeTab === 2 ? 'text-pink-100 fill-white' : 'text-white fill-pink-100'
-      }`}
+          className={`mr-2 text-white group-hover:text-pink-100 group-hover:fill-white ${
+            activeTab === 2
+              ? 'text-pink-100 fill-white'
+              : 'text-white fill-pink-100'
+          }`}
         />
         {t('LastMemeStanding')}
       </button>
@@ -49,7 +51,7 @@ const Tabs = ({ variant }: { variant?: string }) => {
         <DollarIcon
           className={`mr-2 group-hover:text-pink-100 group-hover:fill-white ${activeTab === 3 ? 'text-pink-100 fill-white' : 'text-white'}`}
         />
-         {t('StakingHistory')}
+        {t('StakingHistory')}
       </button>
     </div>
   );

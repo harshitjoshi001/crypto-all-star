@@ -36,29 +36,39 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, asChild = false, icon, isSecondary = false, label, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      asChild = false,
+      icon,
+      isSecondary = false,
+      label,
+      ...props
+    },
+    ref
+  ) => {
     const Comp = asChild ? Slot : 'button';
     return (
       <Comp
-        className={cn(
-          buttonVariants({ variant, className })
-        )}
+        className={cn(buttonVariants({ variant, className }))}
         ref={ref}
         {...props}
       >
-        
-        
-          <Image
-            src={isSecondary ? '/images/secondary-btn.svg' : '/images/primary-btn.png'}
-            alt="Button Logo"
-            layout="fill"
-            priority
-             className="absolute inset-0 z-[-1]"
-          />
-        
-        
-          {/* {icon && <icon />} */}
-        <span className='m-4'>{label}</span>
+        <Image
+          src={
+            isSecondary
+              ? '/images/secondary-btn.svg'
+              : '/images/primary-btn.png'
+          }
+          alt="Button Logo"
+          layout="fill"
+          priority
+          className="absolute inset-0 z-[-1]"
+        />
+
+        {/* {icon && <icon />} */}
+        <span className="m-4">{label}</span>
       </Comp>
     );
   }

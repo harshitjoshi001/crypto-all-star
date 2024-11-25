@@ -6,7 +6,7 @@ import { type ReactNode } from 'react';
 import { cookieToInitialState } from 'wagmi';
 import { getConfig } from '../../wagmi';
 import { Providers } from '../providers';
-import Header from '@/components/header';
+import Header from '@/components/Header';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { NextIntlClientProvider } from 'next-intl';

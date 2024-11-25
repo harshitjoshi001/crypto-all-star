@@ -2,19 +2,18 @@
   "HomePage": {
     "title": "Hello world!",
     "about": "Go to the about page"
-  }
-,
+  },
   "Header": {
     "RoadMap": "Roadmap",
-    "Tokenomics":"Tokenomics",
-    "HowToBuy":"How To Buy",
+    "Tokenomics": "Tokenomics",
+    "HowToBuy": "How To Buy",
     "FAQ": "FAQ",
     "WhitePaper": "White Paper",
-    "Audit":"Audit",
+    "Audit": "Audit",
     "AllMemes": "All Memes",
-    "ConnectWallet":"Connect Wallet",
-    "LastMemeStanding":"Last Meme Standing",
-    "StakingHistory":"Staking History",
+    "ConnectWallet": "Connect Wallet",
+    "LastMemeStanding": "Last Meme Standing",
+    "StakingHistory": "Staking History",
     "Stake": "Stake"
   },
   "Modals": {

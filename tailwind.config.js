@@ -10,15 +10,15 @@ export default {
     extend: {
       container: {
         screens: {
-          sm: '100%', 
-          md: '750px',
-          lg: '900px',
-          xl: '1100px',
-          '2xl': '1360px',
+          sm: "100%",
+          md: "750px",
+          lg: "900px",
+          xl: "1100px",
+          "2xl": "1360px",
         },
       },
       transformOrigin: {
-        'top-left': '0px 0px',
+        "top-left": "0px 0px",
       },
       colors: {
         pink: {
@@ -34,7 +34,7 @@ export default {
         },
         purple: {
           100: "hsl(var(--purple-100))",
-        }
+        },
       },
     },
   },
