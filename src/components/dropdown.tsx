@@ -69,7 +69,7 @@ const Dropdown: React.FC<DropdowmInterface> = ({ options }) => {
           />
           <div className="flex items-center my-2 text-black-100">
             <Image
-              src="/images/ar.svg"
+              src="/images/dropdownIcons/Ethereum.svg"
               alt="Flag"
               width={25}
               height={25}
@@ -79,13 +79,26 @@ const Dropdown: React.FC<DropdowmInterface> = ({ options }) => {
           </div>
           <ArrowDown />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="relative min-w-[230px] p-[10px] bg-white rounded-lg border-2 border-pink-100">
-          <DropdownMenuItem
-            onClick={() => setValue(11155111)}
-            className="rounded font-extrabold text-black-100 p-2 text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 capitalize"
+        <DropdownMenuContent className="relative min-w-[230px] p-[10px] bg-white rounded-lg border-2 border-pink-10 mt-3">
+        <DropdownMenuItem
+            onClick={() => setValue(97)}
+            className="rounded font-extrabold uppercase p-2 text-black hover:text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 "
           >
             <Image
-              src="/images/ar.svg"
+              src="/images/dropdownIcons/Binance.svg"
+              alt="Flag"
+              width={25}
+              height={25}
+              className="mr-2 border-2 border-white rounded-full overflow-hidden object-cover h-[25px]"
+            />
+            Binance
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => setValue(11155111)}
+            className="rounded font-extrabold uppercase p-2 text-black hover:text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 "
+          >
+            <Image
+              src="/images/dropdownIcons/Ethereum.svg"
               alt="Flag"
               width={25}
               height={25}
@@ -95,29 +108,16 @@ const Dropdown: React.FC<DropdowmInterface> = ({ options }) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => setValue(84532)}
-            className="rounded font-extrabold text-black-100 p-2 hover:text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 capitalize"
+            className="rounded font-extrabold uppercase p-2 text-black hover:text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 "
           >
             <Image
-              src="/images/ar.svg"
+              src="/images/dropdownIcons/Coinbase.svg"
               alt="Flag"
               width={25}
               height={25}
               className="mr-2 border-2 border-white rounded-full overflow-hidden object-cover h-[25px]"
             />
-            Base
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => setValue(97)}
-            className="rounded font-extrabold text-black-100 p-2 text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 capitalize"
-          >
-            <Image
-              src="/images/ar.svg"
-              alt="Flag"
-              width={25}
-              height={25}
-              className="mr-2 border-2 border-white rounded-full overflow-hidden object-cover h-[25px]"
-            />
-            Binance
+            Coinbase
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

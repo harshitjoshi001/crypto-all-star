@@ -45,8 +45,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
             </button>
           </div>
           <div>{children}</div>
-          <Link href="/" className='border border-white/[.3] text-white flex items-center justify-center w-full mt-4 px-3 pt-2 py-3'>
-          <WalletIcon className="mr-2" />I don’t have a wallet</Link>
+          <Link href="/" className='group border border-white/[.3] text-white flex items-center justify-center w-full mt-4 px-3 pt-2 py-3 font-bold uppercase'>
+          <WalletIcon className="mr-2 mt-1 text-transparent  group-hover:text-white transition-colors duration-300" />I don’t have a wallet</Link>
         </div>
       </div>
     </>

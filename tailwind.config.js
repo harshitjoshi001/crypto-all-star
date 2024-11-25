@@ -17,8 +17,12 @@ export default {
           '2xl': '1360px',
         },
       },
+      transformOrigin: {
+        'top-left': '0px 0px',
+      },
       colors: {
         pink: {
+          10: "hsl(var(--pink-10))",
           100: "hsl(var(--pink-100))",
         },
         green: {
