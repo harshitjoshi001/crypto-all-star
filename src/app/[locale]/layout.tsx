@@ -11,6 +11,7 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import ChainContext from './index';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -41,10 +42,12 @@ export default async function RootLayout(props: {
       </head>
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
-          <Providers initialState={initialState}>
-            <Header />
-            {props.children}
-          </Providers>
+          <ChainContext>
+            <Providers initialState={initialState}>
+              <Header />
+              {props.children}
+            </Providers>
+          </ChainContext>
         </NextIntlClientProvider>
       </body>
     </html>

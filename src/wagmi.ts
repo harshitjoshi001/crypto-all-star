@@ -8,7 +8,7 @@ import {
 
 let chains : any = [] ;
 
- chains = process.env.NODE_ENV === 'production' ? [...chains , mainnet , base  ] : [...chains , sepolia , baseSepolia] ;
+ chains = process.env.NODE_ENV === 'production' ? [...chains , mainnet , base , bsc  ] : [...chains , sepolia , baseSepolia , bsc] ;
 
 export function getConfig() {
   return createConfig({
@@ -33,8 +33,8 @@ export function getConfig() {
       [sepolia.id]: http( process.env.NEXT_PUBLIC_ETHEREUM_ALCHEMY_TEST_RPC_ENDPOINT ),
       [base.id]: http(process.env.NEXT_PUBLIC_BASE_ALCHEMY_MAIN_RPC_ENDPOINT),
       [baseSepolia.id]: http(process.env.NEXT_PUBLIC_BASE_ALCHEMY_RPC_TEST_ENDPOINT),
-      // [opBNB.id]: http(process.env.NEXT_PUBLIC_BNB_ALCHEMY_MAIN_RPC_ENDPOINT),
-      // [opBNBTestnet.id]: http(process.env.NEXT_PUBLIC_BNB_ALCHEMY_RPC_TEST_ENDPOINT)
+      [bsc.id]: http(process.env.NEXT_PUBLIC_BNB_ALCHEMY_MAIN_RPC_ENDPOINT),
+      [bscTestnet.id]: http(process.env.NEXT_PUBLIC_BNB_ALCHEMY_RPC_TEST_ENDPOINT)
     },
   });
 }

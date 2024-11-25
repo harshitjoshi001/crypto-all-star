@@ -1,17 +1,18 @@
 'use client';
 
-import Modal from './modal';
+import Modal from './Modal';
 import Tabs from '@/components/tabs';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useAccount, useDisconnect, useEnsName } from 'wagmi';
 import { WalletOptions } from './core/wallet';
 import { Providers } from '@/app/providers';
 import Dropdown from '@/components/dropdown';
 import { LanguagesSelector } from '@/components/LanguageSelector';
 import { useTranslations } from 'next-intl';
+import { ChainContext } from '@/app/[locale]';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +24,7 @@ const Header = () => {
   const [isChainSwitch, setIsChainSwitch] = useState(false);
   const t = useTranslations('Header');
   const modal = useTranslations('Modals');
+  const { currentChain, setCurrentChain } = useContext(ChainContext);
 
   useEffect(() => {
     if (isConnected) {
@@ -35,8 +37,6 @@ const Header = () => {
       setIsChainSwitch(true);
     }
   }, [chainId]);
-
-  console.log(chainId, 'chain id detect');
 
   const shouldModalOpen = !!chainId && isChainSwitch;
 
@@ -172,10 +172,10 @@ const Header = () => {
       {walletConnect()}
       <Modal onClose={() => setIsOpen(false)} isOpen={isOpen}>
         <div className="flex flex-col space-y-5">
-          <WalletOptions setIsOpen={setIsOpen} />
+          <WalletOptions />
         </div>
       </Modal>
-      <Modal isOpen={shouldModalOpen} onClose={() => setIsChainSwitch(false)}>
+      <Modal isOpen={false} onClose={() => setIsChainSwitch(false)}>
         {renderSwitchModal()}
       </Modal>
     </header>

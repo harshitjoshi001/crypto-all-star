@@ -1,5 +1,6 @@
+import { ChainContext } from '@/app/[locale]';
 import { Wallet } from '@/app/constants/const';
-import Modal from '@/components/modal';
+import Modal from '@/components/Modal';
 import { Button } from '@/components/ui/button';
 import {
   detectDevice,
@@ -8,7 +9,7 @@ import {
 } from '@/lib/utils';
 import Image from 'next/image';
 import { QRCodeSVG } from 'qrcode.react';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Connector,
   useAccount,
@@ -61,22 +62,23 @@ function WalletOption({
   );
 }
 
-export const WalletOptions = ({
-  setIsOpen,
-}: {
-  setIsOpen: (boolean: boolean) => void;
-}) => {
+export const WalletOptions = () => {
   const { connectors, connect, connectAsync } = useConnect();
   const isMobile = detectDevice();
   const isSafari = getBrowserName() === 'safari';
   const [isBestWalletOpen, setIsBestWalletOpen] = useState(false);
   const [showBestWalletQR, setShowBestWalletQR] = useState(false);
   const [qrGeneratorUri, setQrGeneratorUri] = useState('');
-  const { chainId } = useAccount();
   const { disconnect, disconnectAsync } = useDisconnect();
   const { isConnected } = useAccount();
   const { switchChainAsync } = useSwitchChain();
-  const currentSelectedChain = sessionStorage.getItem('current_chain_id');
+  const { currentChain } = useContext(ChainContext);
+  const [popMessage, setPopMessage] = useState('');
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { chain, chainId } = useAccount();
+  const [currentWallet, setCurrentWallet] = useState<any>();
+
+  console.log(chainId, 'chain valuee detected', chain);
 
   useEffect(() => {
     if (!isBestWalletOpen) return;
@@ -151,6 +153,8 @@ export const WalletOptions = ({
     );
   }
 
+  console.log(chainId, 'and chain detect', chain);
+
   const handleWalletConnection = async (wallet: Connector) => {
     try {
       const provider = await wallet.getProvider();
@@ -167,26 +171,15 @@ export const WalletOptions = ({
       const response = await connectAsync({
         connector: wallet,
       });
-      if (process.env.NODE_ENV === 'production' && response.chainId !== 1) {
-        // await switchChainAsync({ chainId: 56 });
-      }
-      if (
-        process.env.NODE_ENV !== 'production' &&
-        response.chainId !== 11155111
-      ) {
-        await switchChainAsync({ chainId: 11155111 });
-      }
-      if (!response.accounts) {
-        // setIsLoading(false);
-        // return setErrorMessage(ERRORS.NO_ACCOUNT_FOUND);
-      }
-      if (response.accounts.length > 1) {
-        // return setErrorMessage(ERRORS.MULTIPLE_ACCOUNT_ERR);
-      }
     } catch (error) {
-      // handleError(error);
       console.log(error, 'errorrrrr');
     }
+  };
+
+  const handleChainSwitch = async (chainId: number | null) => {
+    console.log(currentWallet);
+    await switchChainAsync({ chainId: chainId });
+    await connectAsync({ connector: currentWallet, chainId: chainId });
   };
 
   return (
@@ -196,6 +189,7 @@ export const WalletOptions = ({
           connector={connector}
           key={id}
           onClick={() => {
+            setCurrentWallet(connector);
             if (name === Wallet.BEST_WALLET) {
               setIsBestWalletOpen(true);
             } else {
@@ -227,6 +221,16 @@ export const WalletOptions = ({
           />
         </Modal>
       )}
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <h1>{popMessage}</h1>
+        <div>
+          <Button label="cancel" onClick={() => setIsOpen(false)} />
+          <Button
+            label="Switch"
+            onClick={() => handleChainSwitch(currentChain)}
+          />
+        </div>
+      </Modal>
     </>
   );
 };
