@@ -34,7 +34,6 @@ const Dropdown: React.FC<DropdowmInterface> = ({ options }) => {
   const { isConnected } = useAccount();
 
   const handleSwitch = async () => {
-    console.log('entered');
     await switchChainAsync({ chainId: value });
     setCurrentChain(value);
     setIsOpen(false);

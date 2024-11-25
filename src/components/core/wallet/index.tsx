@@ -79,8 +79,6 @@ export const WalletOptions = () => {
   const { chain, chainId } = useAccount();
   const [currentWallet, setCurrentWallet] = useState<any>();
 
-  console.log(chainId, 'chain valuee detected', chain);
-
   useEffect(() => {
     if (!isBestWalletOpen) return;
 
@@ -154,8 +152,6 @@ export const WalletOptions = () => {
     );
   }
 
-  console.log(chainId, 'and chain detect', chain);
-
   const handleWalletConnection = async (wallet: Connector) => {
     try {
       const provider = await wallet.getProvider();
@@ -178,7 +174,6 @@ export const WalletOptions = () => {
   };
 
   const handleChainSwitch = async (chainId: number | null) => {
-    console.log(currentWallet);
     await switchChainAsync({ chainId: chainId });
     await connectAsync({ connector: currentWallet, chainId: chainId });
   };

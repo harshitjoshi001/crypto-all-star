@@ -42,12 +42,12 @@ export default async function RootLayout(props: {
       </head>
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
-          <ChainContext>
-            <Providers initialState={initialState}>
+          <Providers initialState={initialState}>
+            <ChainContext>
               <Header />
               {props.children}
-            </Providers>
-          </ChainContext>
+            </ChainContext>
+          </Providers>
         </NextIntlClientProvider>
       </body>
     </html>
