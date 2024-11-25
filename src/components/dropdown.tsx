@@ -87,19 +87,6 @@ const Dropdown: React.FC<DropdowmInterface> = ({ options }) => {
             Ethereum
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => setValue(11155111)}
-            className="rounded font-extrabold uppercase p-2 text-black hover:text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 "
-          >
-            <Image
-              src="/images/dropdownIcons/Ethereum.svg"
-              alt="Flag"
-              width={25}
-              height={25}
-              className="mr-2 border-2 border-white rounded-full overflow-hidden object-cover h-[25px]"
-            />
-            Base
-          </DropdownMenuItem>
-          <DropdownMenuItem
             onClick={() => handleChange(84532)}
             className="rounded font-extrabold text-black-100 p-2 hover:text-pink-100 hover:outline-0 flex items-center focus-visible:ring-transparent focus-visible:ring-0 capitalize"
           >
@@ -110,7 +97,7 @@ const Dropdown: React.FC<DropdowmInterface> = ({ options }) => {
               height={25}
               className="mr-2 border-2 border-white rounded-full overflow-hidden object-cover h-[25px]"
             />
-            Binance
+            Base
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => handleChange(97)}

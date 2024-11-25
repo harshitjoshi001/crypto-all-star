@@ -8,7 +8,7 @@ import {
 
 let chains : any = [] ;
 
- chains = process.env.NODE_ENV === 'production' ? [...chains , mainnet , base , bsc  ] : [...chains , sepolia , baseSepolia , bsc] ;
+ chains = process.env.NODE_ENV === 'production' ? [...chains , mainnet , base , bsc  ] : [...chains , sepolia , baseSepolia , bscTestnet] ;
 
 export function getConfig() {
   return createConfig({

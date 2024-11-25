@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useContext, useEffect, useState } from 'react';
-import { useAccount, useDisconnect, useEnsName } from 'wagmi';
+import { useAccount, useDisconnect, useEnsName, useSwitchChain } from 'wagmi';
 import { WalletOptions } from './core/wallet';
 import { Providers } from '@/app/providers';
 import Dropdown from '@/components/dropdown';
@@ -21,24 +21,19 @@ const Header = () => {
   const { data: ensName } = useEnsName({ address });
   const { chain, chainId } = useAccount();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isChainSwitch, setIsChainSwitch] = useState(false);
+  const { switchChainAsync } = useSwitchChain();
   const t = useTranslations('Header');
   const modal = useTranslations('Modals');
+  const [isChainSupported, setIsChainSupported] = useState(false);
   const { currentChain, setCurrentChain } = useContext(ChainContext);
 
   useEffect(() => {
-    if (isConnected) {
-      setIsOpen(false);
+    if (isConnected && !chain) {
+      setIsChainSupported(true);
+    } else if (isConnected && chain) {
+      setIsChainSupported(true);
     }
-  }, [isConnected]);
-
-  useEffect(() => {
-    if (chainId && chain) {
-      setIsChainSwitch(true);
-    }
-  }, [chainId]);
-
-  const shouldModalOpen = !!chainId && isChainSwitch;
+  }, [chain]);
 
   const walletConnect = () => {
     if (isConnected) {
@@ -67,10 +62,17 @@ const Header = () => {
               label="Ok"
               onClick={async () => {
                 disconnect();
-                setIsChainSwitch(false);
+                setIsChainSupported(false);
+                await switchChainAsync({ chainId: currentChain });
               }}
             />
-            <Button label="Cancel" onClick={() => setIsChainSwitch(false)} />
+            <Button
+              label="Cancel"
+              onClick={async () => {
+                await switchChainAsync({ chainId: currentChain });
+                setIsChainSupported(false);
+              }}
+            />
           </div>
         </>
       );
@@ -79,8 +81,8 @@ const Header = () => {
         <>
           <h3>{modal('SwitchChain')}</h3>
           <div className="flex justify-around">
-            <Button label="Ok" onClick={async () => {}} />
-            <Button label="Cancel" />
+            <Button label="Ok" onClick={async () => setCurrentChain(chainId)} />
+            <Button label="Cancel" onClick={() => setIsChainSupported(false)} />
           </div>
         </>
       );
@@ -175,7 +177,13 @@ const Header = () => {
           <WalletOptions />
         </div>
       </Modal>
-      <Modal isOpen={false} onClose={() => setIsChainSwitch(false)}>
+      <Modal
+        isOpen={isChainSupported}
+        onClose={async () => {
+          setIsChainSupported(false);
+          await switchChainAsync({ chainId: currentChain });
+        }}
+      >
         {renderSwitchModal()}
       </Modal>
     </header>
